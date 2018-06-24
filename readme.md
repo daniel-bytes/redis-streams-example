@@ -4,6 +4,19 @@ Simple data pipeline example using Redis Streams for connecting producers and co
 
 This application requires Redis 5.0 or later.
 
+## Setup
+
+First, make sure you have Ruby installed, as well as Bundler.  The demo was created using Ruby 2.5.0 but should work fine in other recent versions of Ruby.
+
+To install:
+
+```
+git clone git@github.com:daniel-bytes/redis-streams-example.git
+cd redis-streams-example
+bundle install
+```
+
+
 ## Producer
 
 The producer application is used to download jobs from Github and publish on the Redis `github_jobs` stream.  The producer makes no effort to deduplicate jobs, it is up to the consumer to ensure that the same job is not processed multiple times.
