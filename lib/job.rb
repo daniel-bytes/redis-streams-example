@@ -3,7 +3,7 @@ require_relative './types'
 require_relative './message'
 
 ##
-# A struct representing a Job on Github jobs API
+# A struct representing a job post.
 #
 class Job < Dry::Struct::Value
   attribute :id, Types::Strict::String
@@ -13,7 +13,7 @@ class Job < Dry::Struct::Value
   attribute :company, Types::Strict::String
 
   ##
-  # Converts the current Job to a Message
+  # Converts the current Job to a Message.
   #
   def to_message
     Message.new(
@@ -23,7 +23,7 @@ class Job < Dry::Struct::Value
   end
 
   ##
-  # Converts a stream Message to a new Job instance
+  # Converts a stream Message to a new Job instance.
   #
   def self.from_message(message)
     payload = message.payload

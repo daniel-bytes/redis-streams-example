@@ -2,20 +2,28 @@ require_relative './types'
 require_relative './message'
 
 ##
-# A class for reading and writing Redis streams
+# A class for reading and writing Redis streams.
 #
 class Stream
   ##
-  # An error throw when calling listen on an already listening Stream
+  # An error throw when calling listen on an already listening Stream.
+  #
   class StreamAlreadyListeningError < StandardError; end
   
   ##
-  # String => String mapping for a stream name and ID
+  # String => String mapping for a stream name and id.
+  #
   StreamAndId = Types::Hash.map(
     Types::Coercible::String,
     Types::Coercible::String
   )
 
+  ##
+  # Creates a new instance if a Stream.
+  #
+  # @param redis - An instance of Redis.
+  # @param read_timeout_ms - The read timeout granularity. 
+  #                          You must wait up to this amount of ms when cancelling a stream read.
   def initialize(redis, read_timeout_ms: 1000)
     @redis = redis
     @reading = false
@@ -23,7 +31,9 @@ class Stream
   end
 
   ##
-  # Deletes the stream
+  # Deletes the stream.
+  #
+  # @param stream_name - The name of the stream to delete
   #
   def clear_stream!(stream_name)
     @redis.del(stream_name)

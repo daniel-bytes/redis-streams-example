@@ -1,13 +1,21 @@
 require_relative './job'
 require_relative './stream'
 
+##
+# Wrapper around a Redis Stream object, for streaming Job data.
+#
 class JobStream
+  ##
+  # Creates a new JobStream instance.
+  #
+  # @param redis - An instance of Redis
+  #
   def initialize(redis)
     @stream = Stream.new(redis)
   end
 
   ##
-  # Clears the jobs stream
+  # Clears the jobs stream.
   #
   def clear!
     @stream.clear_stream!('github_jobs')
@@ -32,7 +40,7 @@ class JobStream
   end
 
   ##
-  # Stops listening for jobs
+  # Stops listening for jobs.
   #
   def end_listen
     @stream.end_listen

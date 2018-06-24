@@ -2,7 +2,7 @@ require 'pp'
 require_relative './types'
 
 ##
-# A message type, to be read/written by a Redis Stream
+# A message type, to be read/written by a Redis Stream.
 #
 class Message < Dry::Struct::Value
   attribute :stream, Types::Strict::String
@@ -10,7 +10,7 @@ class Message < Dry::Struct::Value
   attribute :payload, Types::Hash.map(Types::Coercible::String, Types::Coercible::String)
 
   ##
-  # Returns a copy of the current instance, with the ID set
+  # Returns a copy of the current instance, with the id set.
   #
   def with_id(id)
     args = self.to_h
@@ -19,7 +19,7 @@ class Message < Dry::Struct::Value
   end
 
   ##
-  # Returns an array suitable for use as Redis XADD arguments
+  # Returns an array suitable for use as Redis XADD arguments.
   #
   def to_xadd_args
     id = self.id ? self.id : '*'
@@ -28,15 +28,15 @@ class Message < Dry::Struct::Value
   end
 
   ##
-  # Returns the payload hash as a flat array
+  # Returns the payload hash as a flat array.
   #
   def flat_payload
     self.payload.to_a.flatten
   end
 
   ##
-  # Parses the results of a Redis XREAD call
-  # Returns an array of Messages
+  # Parses the results of a Redis XREAD call.
+  # Returns an array of Messages.
   #
   # Incoming data format:
   # [                               <- Array of streams

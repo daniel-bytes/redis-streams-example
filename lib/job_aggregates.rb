@@ -2,9 +2,12 @@ require 'date'
 require_relative './types'
 
 ##
-# A struct representing a Job on Github jobs API
+# A struct representing aggregate data for jobs.
 #
 class JobAggregates < Dry::Struct::Value
+  ##
+  # Map type used to store aggregate counts for a job field type.
+  #
   AggregateField = Types::Hash.map(
     Types::Coercible::String,
     Types::Coercible::Integer
@@ -15,12 +18,15 @@ class JobAggregates < Dry::Struct::Value
   attribute :location, AggregateField
   attribute :company, AggregateField
 
+  ##
+  # Fetches aggregates for a specific field key (:title, :location, etc).
+  #
   def get(key)
     self.send(key)
   end
 
   ##
-  # Converts a Redis hash to a new JobAggregates
+  # Converts a Redis hash result to a new JobAggregates instance.
   #
   def self.from_redis(hash)
     hash[:created_at] ||= {}
